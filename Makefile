@@ -1,12 +1,12 @@
 BRANCH := $(shell git -C .. rev-parse --abbrev-ref HEAD)
 
 ifeq ($(findstring 10,$(BRANCH)),10)
-    NAME ?= Genom-AOSP-10-lavender
+    NAME ?= Genom-AOSP-10-ginkgo
     DATE := $(shell date "+%Y%m%d-%H%M")
     ZIP := $(NAME)-$(DATE).zip
 else
     ROM ?= Unified
-    NAME ?= Genom-$(ROM)-Pie-lavender
+    NAME ?= Genom-$(ROM)-Pie-ginkgo
     DATE := $(shell date "+%Y%m%d-%H%M")
     ZIP := $(NAME)-$(DATE).zip
 endif
