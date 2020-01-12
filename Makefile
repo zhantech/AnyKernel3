@@ -2,15 +2,19 @@ DEVICE := $(shell echo ${DEVICE})
 BRANCH := $(shell git -C .. rev-parse --abbrev-ref HEAD)
 
 ifeq ($(findstring 10,$(BRANCH)),10)
-    ifeq ($(findstring lavender,$(DEVICE)),lavender)
-        NAME := Genom-Multi-10-lavender
-    else
-        NAME := Genom-AOSP-10-$(DEVICE)
-    endif    
+    NAME := Genom-AOSP-10-$(DEVICE)
     DATE := $(shell date "+%Y%m%d-%H%M")
     ZIP := $(NAME)-$(DATE).zip
 else
-    NAME := Genom-Multi-Pie-$(DEVICE)
+    ifeq ($(findstring lavender,$(DEVICE)),lavender)
+        ifeq ($(findstring oldcam,$(BRANCH)),oldcam)
+            NAME := Genom-Multi-Pie-lavender-oldcam
+        else
+            NAME := Genom-Multi-Pie-lavender-newcam
+        endif
+    else
+        NAME := Genom-Multi-Pie-$(DEVICE)
+    endif
     DATE := $(shell date "+%Y%m%d-%H%M")
     ZIP := $(NAME)-$(DATE).zip
 endif
