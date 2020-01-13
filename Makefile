@@ -31,7 +31,6 @@ $(ZIP):
 clean:
 	rm -vf *.zip
 	rm -vf *.gz-dtb
-	rm -vf kernel/*.gz
-	rm -vf dtbs/*.dtb
 	rm -vf modules/vendor/lib/modules/*.ko
 	echo "Cleaning done."
+
