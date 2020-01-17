@@ -7,11 +7,7 @@ ifeq ($(findstring 10,$(BRANCH)),10)
     ZIP := $(NAME)-$(DATE).zip
 else
     ifeq ($(findstring lavender,$(DEVICE)),lavender)
-        ifeq ($(findstring oldcam,$(BRANCH)),oldcam)
-            NAME := Genom-Multi-Pie-lavender-oldcam
-        else
-            NAME := Genom-Multi-Pie-lavender-newcam
-        endif
+        NAME := Genom-MIUI-Pie-lavender-newcam
     else
         NAME := Genom-Multi-Pie-$(DEVICE)
     endif
