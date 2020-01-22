@@ -13,7 +13,11 @@ else
     ifeq ($(findstring lavender,$(DEVICE)),lavender)
         NAME := Genom-lavender-MIUI-Pie-newcam
     else
+    ifeq ($(findstring vince,$(DEVICE)),vince)
+        NAME := Genom-vince-MIUI-Oreo
+    else
         NAME := Genom-$(DEVICE)-Multi-Pie
+    endif
     endif
     DATE := $(shell date "+%Y%m%d-%H%M")
     ZIP := $(NAME)-$(DATE).zip
