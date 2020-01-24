@@ -219,7 +219,7 @@ do_devicecheck() {
   for testname in $(file_getprop anykernel.sh 'device.name.*'); do
     for devicename in $device $product $vendordevice $vendorproduct; do
       if [ "$devicename" == "$testname" ]; then
-        ui_print "$testname" " ";
+        ui_print "- $testname" " ";
         match=1;
         break 2;
       fi;
@@ -227,6 +227,16 @@ do_devicecheck() {
   done;
   if [ ! "$match" ]; then
     abort " " "Unsupported device. Aborting...";
+  ui_print " ";
+  fi;
+  ui_print "Checking for Project Treble...";
+  if [ "$(file_getprop /system/build.prop ro.treble.enabled)" == "true" ]; then
+    ui_print "- Treble Status: Supported";
+    #dtb=/tmp/anykernel/dtb-treble;
+  else
+    ui_print "- Treble Status: Not supported";
+   # dtb=/tmp/anykernel/dtb-nontreble;
+  ui_print " ";
   fi;
 }
 int2ver() {
@@ -260,7 +270,7 @@ do_versioncheck() {
     done;
   fi;
   if [ "$supported" ]; then
-    ui_print "$android_ver" " ";
+    ui_print "- $android_ver" " ";
   else
     abort " " "Unsupported Android version. Aborting...";
   fi;
@@ -283,7 +293,7 @@ do_levelcheck() {
     hi_lvl=9999-99;
   fi;
   if echo -e "$hi_lvl\n$lo_lvl\n$parsed_lvl" | $BB sort -g | $BB grep -n "$parsed_lvl" | $BB grep -q '^2:'; then
-    ui_print "$android_lvl" " ";
+    ui_print "- $android_lvl" " ";
   else
     abort " " "Unsupported Android security patch level. Aborting...";
   fi;
@@ -412,13 +422,39 @@ if [ -f version ]; then
   ui_printfile version;
   ui_print " ";
 fi;
-ui_print " " "AnyKernel3 by osm0sis @ xda-developers" " " " ";
+#ui_print " " "AnyKernel3 by osm0sis @ xda-developers" " " " ";
+ui_print " ";
 
 setup_env;
 
 do_devicecheck;
+ui_print " ";
 do_versioncheck;
-do_levelcheck;
+ui_print " ";
+#do_levelcheck;
+#ui_print " ";
+
+if [ "$(cat /dev/block/bootdevice/by-name/boot | grep -m 1 androidboot | grep permissive | wc -l)" -gt "0" ]; then
+  ui_print "Permissive Selinux detected";
+  ui_print " ";
+else
+  ui_print "Enforcing Selinux detected";
+  ui_print " ";
+fi;
+
+ui_print "Rom info";
+username="$(file_getprop /system/build.prop "ro.build.user")";
+ui_print "- User: $username";
+
+hostname="$(file_getprop /system/build.prop "ro.build.host")";
+ui_print "- Host: $hostname";
+
+productname="$(file_getprop /system/build.prop "ro.product.name")";
+ui_print "- Product name: $productname";
+
+date_flag="$(date +%Y-%m-%d)";
+ui_print "- Current system date: $date_flag";
+ui_print " ";
 
 ui_print "Installing...";
 CORE=$($BB grep -oE 'ak.*core.sh' anykernel.sh);
