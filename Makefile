@@ -7,7 +7,7 @@ ifeq ($(findstring 10,$(BRANCH)),10)
     else
         NAME := Genom-$(DEVICE)-AOSP-10
     endif
-    DATE := $(shell date "+%Y%m%d-%H%M")
+    DATE := $(shell date "+%Y%m%d")
     ZIP := $(NAME)-$(DATE).zip
 else
     ifeq ($(findstring lavender,$(DEVICE)),lavender)
@@ -19,7 +19,7 @@ else
         NAME := Genom-$(DEVICE)-Multi-Pie
     endif
     endif
-    DATE := $(shell date "+%Y%m%d-%H%M")
+    DATE := $(shell date "+%Y%m%d")
     ZIP := $(NAME)-$(DATE).zip
 endif
 
