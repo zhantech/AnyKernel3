@@ -11,12 +11,12 @@ ifeq ($(findstring 10,$(BRANCH)),10)
     ZIP := $(NAME)-$(DATE).zip
 else
     ifeq ($(findstring lavender,$(DEVICE)),lavender)
-        NAME := Genom-lavender-AOSP-Pie
+        NAME := Genom-lavender-UNIFIED-Pie
     else
     ifeq ($(findstring vince,$(DEVICE)),vince)
         NAME := Genom-vince-MIUI-Oreo
     else
-        NAME := Genom-$(DEVICE)-Multi-Pie
+        NAME := Genom-$(DEVICE)-UNIFIED-Pie
     endif
     endif
     DATE := $(shell date "+%Y%m%d")
@@ -28,7 +28,7 @@ EXCLUDE := Makefile *.git* *.jar* *placeholder* *.md*
 normal: $(ZIP)
 
 $(ZIP):
-	sed -i 's/universal/${DEVICE}/g' anykernel.sh
+	sed -i "/^device.name1=/s/=.*/=${DEVICE}/" anykernel.sh
 	zip -r9 "$@" . -x $(EXCLUDE)
 	echo "Done creating ZIP: $(ZIP)"
 
