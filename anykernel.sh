@@ -143,6 +143,40 @@ rm -rf /storage/emulated/0/Spectrum/profiles/battery.profile
 rm -rf /storage/emulated/0/Spectrum/profiles/gaming.profile
 rm -rf /storage/emulated/0/Spectrum/profiles/performance.profile
 
+#Spectrum========================================
+cp -rpf $home/ramdisk/init.spectrum.rc /system/vendor/etc/init/init.spectrum.rc
+chmod 644 /system/vendor/etc/init/init.spectrum.rc
+cp -rpf $home/ramdisk/init.spectrum.sh /system/vendor/etc/init/init.spectrum.sh
+chmod 644 /system/vendor/etc/init/init.spectrum.sh
+#spectrum write init.rc only##############################
+if [ -e init.rc ]; then
+	cp -rpf init.rc~ init.rc
+		####for init.qcom.rc
+		remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /init.spectrum.rc";
+		remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /vendor/etc/init/hw/init.spectrum.rc";
+		remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /vendor/etc/init/init.spectrum.rc";
+		remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /system/etc/init/init.spectrum.rc";
+		backup_file /system/vendor/etc/init/hw/init.qcom.rc;
+		#for init.rc
+		remove_line init.rc "import /init.spectrum.rc";
+		remove_line init.rc "import /vendor/etc/init/hw/init.spectrum.rc";
+		remove_line init.rc "import /vendor/etc/init/init.spectrum.rc";
+		remove_line init.rc "import /system/etc/init/init.spectrum.rc";
+		backup_file init.rc;
+		insert_line init.rc "init.spectrum.rc" before "import /init.usb.rc" "import /vendor/etc/init/init.spectrum.rc";
+	else
+		if [ -e /system/vendor/etc/init/hw/init.qcom.rc ]; then
+			cp -rpf /system/vendor/etc/init/hw/init.qcom.rc~  /system/vendor/etc/init/hw/init.qcom.rc
+				remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /init.spectrum.rc";
+				remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /vendor/etc/init/hw/init.spectrum.rc";
+				remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /vendor/etc/init/init.spectrum.rc";
+				remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /system/etc/init/init.spectrum.rc";
+				backup_file /system/vendor/etc/init/hw/init.qcom.rc;
+				insert_line /system/vendor/etc/init/hw/init.qcom.rc "init.spectrum.rc" before "import /vendor/etc/init/hw/init.qcom.usb.rc" "import /vendor/etc/init/init.spectrum.rc";
+		fi;
+fi;
+#Spectrum========================================
+
 #remove other file spectrum if any
 rm -rf /system/vendor/etc/init/hw/init.spectrum.rc
 rm -rf /system/vendor/etc/init/hw/init.spectrum.sh
