@@ -473,4 +473,10 @@ if [ "$(file_getprop anykernel.sh do.cleanup)" == 1 ]; then
   cleanup;
 fi;
 
+ui_print " ";
+ui_print "Running fstrim...";
+fstrim -v /cache;
+fstrim -v /data;
+fstrim -v /system;
+
 ui_print " " " " "Done!";
