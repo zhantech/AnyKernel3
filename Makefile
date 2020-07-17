@@ -1,7 +1,7 @@
 BRANCH := $(shell git -C .. rev-parse --abbrev-ref HEAD)
 
 ifeq ($(findstring 10,$(BRANCH)),10)
-    NAME := Genom-MIUI-AOSP-10-RN8-RN8T
+    NAME := Genom-AOSP-10-RN8-RN8T
 else
     NAME := Genom-MIUI-Pie-ginkgo
 endif
