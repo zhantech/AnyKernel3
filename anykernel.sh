@@ -13,8 +13,8 @@ do.cleanuponabort=0
 device.name1=topaz
 device.name2=tapas
 device.name3=xun
-device.name4=
-device.name5=
+device.name4=sapphire
+device.name5=sapphiren
 supported.versions=
 '; } # end properties
 
